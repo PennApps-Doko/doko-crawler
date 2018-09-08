@@ -59,7 +59,7 @@ def crawl():
                     print("rest")
                     spot['restaurantId'] = str(uuid.uuid1())
                     search = yelp.search_query(term=data['name'], longitude=spot['location']['lon'], latitude=spot['location']['lat'])
-                    description = yelp.business_query(['business'][0]['id'])
+                    description = yelp.business_query(search['business'][0]['id'])
                     print('description', description)
                     rate = 4
                     url = "https://www.upenn.edu/"
