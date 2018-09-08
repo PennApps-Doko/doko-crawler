@@ -11,11 +11,11 @@ with open("./config.js", 'r') as f:
 auth = tweepy.OAuthHandler(config['twitter_header_a'], config['twitter_header_b'])
 auth.set_access_token(config["twitter_token_a"], config["twitter_token_b"])
 
-api = tweepy.API(auth)
+api = tweepy.API(auth, wait_on_rate_limit=True)
 yelp = YelpAPI(config['yelp'])
 
 def crawl():
-    threading.Timer(10.0, crawl).start()
+    threading.Timer(30.0, crawl).start()
     public_tweets = api.favorites("PennappsD", 1)
     json_list = []
     for tweet in public_tweets:
