@@ -25,24 +25,29 @@ def crawl():
         if tweet.place and len(ts) == 0:
             data = {}
             data['name'] = tweet.place.name
-            data['text'] = "".join(texts[0:len(texts)-1])
-            data['images'] = []
-            data['source'] = "Twitter"
-            data['url'] = texts[-1]
+            data['content'] = {'text': "".join(texts[0:len(texts)-1]),
+                               'images': [],
+                               'source': "Twitter",
+                               'url': texts[-1]}
             data['id'] = str(uuid.uuid1())
             for m in tweet.entities['media']:
-                data['images'].append(m["media_url_https"])
+                data['content']['images'].append(m["media_url_https"])
 
             res_spots = dbhelper.getData('Spots', {"name": data['name']})
 
             if res_spots.__len__() == 0:
                 data['spotId'] = str(uuid.uuid1())
-                print(tweet.place.bounding_box.coordinates[0][0])
+                coords = tweet.place.bounding_box.coordinates[0][0]
+                if not coords:
+                    coords = {
+                        "lon": -75.192110,
+                        "lat": 39.953321
+                    }
                 spot = {
                         "id": data['spotId'],
                         "name": data['name'],
-                        "location": {"lat": tweet.place.bounding_box.coordinates[0][0][0],
-                                     "lon": tweet.place.bounding_box.coordinates[0][0][1]}
+                        "location": {"lon": coords[0],
+                                     "lat": coords[1]}
                         }
                 res_restaurant = dbhelper.getData("Restaurants", {"name": spot['name']})
                 if res_restaurant.__len__() == 0:
