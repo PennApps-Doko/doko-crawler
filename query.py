@@ -41,7 +41,7 @@ def crawl():
                         "location": {"lat": tweet.place.bounding_box.coordinates[0][0][0],
                                      "lon": tweet.place.bounding_box.coordinates[0][0][1]}
                         }
-                res_restaurant = dbhelper.getData("Restaurant", {"name": spot['name']})
+                res_restaurant = dbhelper.getData("Restaurants", {"name": spot['name']})
                 if res_restaurant.__len__() == 0:
                     spot['restaurantId'] = str(uuid.uuid1())
                     search = yelp.search_query(term=data['name'], longitude=spot['location']['lon'], latitude=spot['location']['lat'])
