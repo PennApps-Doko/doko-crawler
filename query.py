@@ -78,13 +78,14 @@ def crawl():
                         "tags": tags
                     }
                     dbhelper.setData("Restaurants", restrurant)
-                print(spot)
+                print('spot1', spot)
                 dbhelper.setData("Spots", spot)
             else:
                 for r in res_spots:
                     data['spotId'] = r['id']
 
             dbhelper.setData('Posts', data)
+            print('spot2', spot)
             print(data)
 
 
