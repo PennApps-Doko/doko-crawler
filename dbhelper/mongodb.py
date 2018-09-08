@@ -3,7 +3,7 @@ import json
 
 
 def build_connection():
-    with open("../config.js", 'r') as f:
+    with open("./config.js", 'r') as f:
         db_config = json.load(f)["mongo"]
 
     myclient = pymongo.MongoClient(db_config)
