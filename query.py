@@ -3,6 +3,7 @@ import threading
 import json
 import uuid
 import dbhelper
+import time
 from yelpapi import YelpAPI
 
 
@@ -30,6 +31,7 @@ def crawl():
                                'source': "Twitter",
                                'url': texts[-1]}
             data['id'] = str(uuid.uuid1())
+            data['time'] = time.time()
             for m in tweet.entities['media']:
                 data['content']['images'].append(m["media_url_https"])
 
