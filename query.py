@@ -20,7 +20,7 @@ def crawl():
     json_list = []
     for tweet in public_tweets:
         texts = tweet.text.split(" ")
-        ts = dbhelper.getData("Posts", {"url": texts[-1]})
+        ts = dbhelper.getData("Posts", {"content.url": texts[-1]})
 
         if tweet.place and len(ts) == 0:
             data = {}
