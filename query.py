@@ -52,7 +52,7 @@ def crawl():
                         }
 
                 data['location'] = {"lon": coords[0], "lat": coords[1]}
-
+                print('spot', spot)
 
                 res_restaurant = dbhelper.getData("Restaurants", {"name": spot['name']})
                 if res_restaurant.__len__() == 0:
@@ -85,7 +85,6 @@ def crawl():
                     data['spotId'] = r['id']
 
             dbhelper.setData('Posts', data)
-            print('spot2', spot)
             print(data)
 
 
