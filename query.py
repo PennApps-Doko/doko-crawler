@@ -19,13 +19,16 @@ def crawl():
     public_tweets = api.favorites("PennappsD", 1)
     json_list = []
     for tweet in public_tweets:
-        if tweet.place:
+        texts = tweet.text.split(" ")
+        ts = dbhelper.getData("Posts", {"url": texts[-1]})
+
+        if tweet.place and len(ts) == 0:
             data = {}
             data['name'] = tweet.place.name
-            data['text'] = tweet.text
+            data['text'] = "".join(texts[0:len(texts)-1])
             data['images'] = []
             data['source'] = "Twitter"
-            data['url'] = data['text'].split(" ")[-1]
+            data['url'] = texts[-1]
             data['id'] = str(uuid.uuid1())
             for m in tweet.entities['media']:
                 data['images'].append(m["media_url_https"])
@@ -70,7 +73,7 @@ def crawl():
                 for r in res_spots:
                     data['spotId'] = r['id']
 
-            dbhelper.setData('Post', data)
+            dbhelper.setData('Posts', data)
             print(data)
 
 
