@@ -43,9 +43,10 @@ def crawl():
                         }
                 res_restaurant = dbhelper.getData("Restaurants", {"name": spot['name']})
                 if res_restaurant.__len__() == 0:
+                    print("rest")
                     spot['restaurantId'] = str(uuid.uuid1())
                     search = yelp.search_query(term=data['name'], longitude=spot['location']['lon'], latitude=spot['location']['lat'])
-                    rate = 8
+                    rate = 4
                     url = "https://www.upenn.edu/"
                     tags =  ['fast-food', 'very-cheap', 'take-out', 'high-calorie']
                     if len(search['businesses']) > 0:
@@ -59,11 +60,11 @@ def crawl():
                         "name": spot['name'],
                         "id": spot['restaurantId'],
                         "description": "It is a very well known fast food restaurant",
-                        "rank": rate,
+                        "rank": int(rate*2),
                         "url": url,
                         "tags": tags
                     }
-                    dbhelper.setData("Restaurant", restrurant)
+                    dbhelper.setData("Restaurants", restrurant)
                 dbhelper.setData("Spots", spot)
             else:
                 for r in res_spots:
