@@ -38,6 +38,7 @@ def crawl():
             if res_spots.__len__() == 0:
                 data['spotId'] = str(uuid.uuid1())
                 coords = tweet.place.bounding_box.coordinates[0][0]
+
                 if not coords:
                     coords = {
                         "lon": -75.192110,
@@ -49,6 +50,10 @@ def crawl():
                         "location": {"lon": coords[0],
                                      "lat": coords[1]}
                         }
+
+                data['location'] = {"lon": coords[0], "lat": coords[1]}
+
+
                 res_restaurant = dbhelper.getData("Restaurants", {"name": spot['name']})
                 if res_restaurant.__len__() == 0:
                     print("rest")
@@ -73,6 +78,7 @@ def crawl():
                         "tags": tags
                     }
                     dbhelper.setData("Restaurants", restrurant)
+                print(spot)
                 dbhelper.setData("Spots", spot)
             else:
                 for r in res_spots:
