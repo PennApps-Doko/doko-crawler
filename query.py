@@ -5,6 +5,7 @@ import uuid
 import dbhelper
 import time
 from yelpapi import YelpAPI
+import requests
 
 
 with open("./config.js", 'r') as f:
@@ -32,6 +33,9 @@ def crawl():
                                'url': texts[-1]}
             data['id'] = str(uuid.uuid1())
             data['time'] = time.time()
+            response = requests.get("https://api.fda.gov/food/enforcement.json?search=salad&limit=10")
+            data['quality'] = response
+
             for m in tweet.entities['media']:
                 data['content']['images'].append(m["media_url_https"])
 
